@@ -1,6 +1,6 @@
 # GifCap
 
-A Linux-first rebuild of a popular GIF capturing software for windows, but built from the ground up to be Cross-platform.
+A Linux-first, simple, GIF format screen-capturing tool. Inspired by the amazing tool "GifCam" by BahraniApps, but built from the ground up to be Cross-platform.
 
 ## Features
 
