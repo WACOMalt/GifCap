@@ -1,15 +1,16 @@
 # GifCap
 
-A Linux-first port of the popular GifCam screen recorder with improvements for unlimited recording and streamlined controls.
+A Linux-first rebuild of a popular GIF capturing software for windows, but built from the ground up to be Cross-platform.
 
 ## Features
 
 - **Transparent Cutout Window**: Record exactly what you see through the app's transparent center region
 - **Unlimited Recording**: Disk-based frame storage eliminates the ~200 frame limit
-- **Simple FPS Control**: Direct integer input field (default 30fps) instead of preset system
+- **Simple FPS Control**: Direct input field for framerate, instead of clunky presets you have to configure ahead of time.
 - **Smart Compression**: Only saves changed pixels between frames for smaller file sizes
 - **Frame Editor**: Full control over captured frames with deletion and timing adjustments
 - **Settings Persistence**: Automatically remembers your FPS and window preferences
+- **Multiple output optimization options**: Implementing ImageMagick, FFMpeg, and Gifsicle for exports.
 
 ## Requirements
 
