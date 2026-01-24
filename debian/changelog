@@ -1,0 +1,11 @@
+gifcap (1.0.0-1) unstable; urgency=medium
+
+  * Initial release
+  * Features:
+    - Transparent recording window
+    - X11 and Wayland support
+    - Cursor capture with compositing
+    - Frame editor
+    - Smart frame optimization
+
+ -- GifCap Developers <dev@gifcap.com>  Fri, 24 Jan 2026 15:36:00 -0500
