@@ -19,11 +19,11 @@ override_dh_auto_install:
 	
 	# Install desktop file
 	mkdir -p debian/gifcap/usr/share/applications
-	cp resources/com.gifcap.GifCap.desktop debian/gifcap/usr/share/applications/
+	cp resources/bsums.xyz.gifcap.desktop debian/gifcap/usr/share/applications/
 	
 	# Install icon
 	mkdir -p debian/gifcap/usr/share/icons/hicolor/512x512/apps
-	cp resources/icons/com.gifcap.GifCap.png debian/gifcap/usr/share/icons/hicolor/512x512/apps/
+	cp resources/icons/bsums.xyz.gifcap.png debian/gifcap/usr/share/icons/hicolor/512x512/apps/
 
 override_dh_auto_test:
 	# Skip tests for now

@@ -11,8 +11,8 @@ Architecture: all
 Depends: ${python3:Depends}, ${misc:Depends},
          python3-pyqt6,
          python3-pil,
-         python3-imageio,
-         python3-mss
+         python3-pil,
+         python3-imageio
 Recommends: grim
 Description: Screen recorder for creating animated GIFs
  GifCap is a Linux port of GifCam featuring a transparent capture

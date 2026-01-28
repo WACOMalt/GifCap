@@ -1,0 +1,88 @@
+app-id: bsums.xyz.gifcap
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: gifcap
+
+finish-args:
+  # Graphics
+  - --socket=wayland
+  - --socket=x11
+  - --device=dri
+  - --share=ipc
+  
+  # File access
+  - --filesystem=home
+  
+  # For saving GIFs
+  - --filesystem=xdg-documents
+  - --filesystem=xdg-pictures
+  - --filesystem=xdg-download
+  
+  # Force loading of bundled Qt6 libraries
+  - --env=LD_LIBRARY_PATH=/app/lib/python3.11/site-packages/PyQt6/Qt6/lib
+
+modules:
+  # Build grim for Wayland support
+  - name: grim
+    buildsystem: meson
+    sources:
+      - type: git
+        url: https://github.com/emersion/grim.git
+        tag: v1.4.0
+    cleanup:
+      - /include
+      - /lib/pkgconfig
+
+  # Python dependencies - using pre-built wheels to avoid build dependency issues
+  - name: python-dependencies
+    buildsystem: simple
+    build-commands:
+      - pip3 install --no-index --find-links="file://${PWD}" --prefix=${FLATPAK_DEST} *.whl
+    sources:
+      # PyQt6 - Qt bindings for Python (cp38-abi3 = compatible with Python 3.8+)
+      - type: file
+        url: https://files.pythonhosted.org/packages/0b/5a/51f4762b9f314b5577d17704bc1280532a725ba359d6cc177ab6de692035/PyQt6-6.6.1-cp38-abi3-manylinux_2_28_x86_64.whl
+        sha256: 5aa0e833cb5a79b93813f8181d9f145517dd5a46f4374544bcd1e93a8beec537
+      
+      # PyQt6-sip - SIP bindings for PyQt6
+      - type: file
+        url: https://files.pythonhosted.org/packages/e0/d3/51143a254a7c9e9650c3eedfc35b967cdcd180a289c6fa2a937c57fe405a/pyqt6_sip-13.11.0-cp311-cp311-manylinux1_x86_64.manylinux_2_5_x86_64.whl
+        sha256: 364424dacdee9e0a2a723646b5608139629ad9bde318dd755d86f5e0ba123c79
+      
+      # PyQt6-Qt6 - Qt6 runtime binaries (required by PyQt6)
+      - type: file
+        url: https://files.pythonhosted.org/packages/a8/07/21f7dc188e35b46631707f3b40ace5643a0e03a8e1e446854826d08a04ae/pyqt6_qt6-6.9.2-py3-none-manylinux_2_28_x86_64.whl
+        sha256: 9abfc0ee4a8293a6442128ae3f87f68e82e2a949d7b9caabd98c86ba5679ab48
+      
+      # Pillow - Image processing
+      - type: file
+        url: https://files.pythonhosted.org/packages/66/9c/2e1877630eb298bbfd23f90deeec0a3f682a4163d5ca9f178937de57346c/pillow-10.2.0-cp311-cp311-manylinux_2_28_x86_64.whl
+        sha256: a086c2af425c5f62a65e12fbf385f7c9fcb8f107d0849dba5839461a129cf311
+      
+      # imageio - Image I/O library
+      - type: file
+        url: https://files.pythonhosted.org/packages/c0/69/3aaa69cb0748e33e644fda114c9abd3186ce369edd4fca11107e9f39c6a7/imageio-2.33.1-py3-none-any.whl
+        sha256: c5094c48ccf6b2e6da8b4061cd95e1209380afafcbeae4a4e280938cce227e1d
+      
+      # mss - Screen capture library
+      - type: file
+        url: https://files.pythonhosted.org/packages/1c/22/e61c6c9fa3730f5ac816f12514947ebfbd42340c56807a7a81b4b7cd5786/mss-9.0.1-py3-none-any.whl
+        sha256: 7ee44db7ab14cbea6a3eb63813c57d677a109ca5979d3b76046e4bddd3ca1a0b
+      
+      # numpy - Required by imageio
+      - type: file
+        url: https://files.pythonhosted.org/packages/5d/9d/7862db06743f489e6a502a3b93136d73aea27d97b2cf91504f70a27501d6/numpy-2.4.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
+        sha256: 538bf4ec353709c765ff75ae616c34d3c3dca1a68312727e8f2676ea644f8509
+
+  # GifCap application
+  - name: gifcap
+    buildsystem: simple
+    build-commands:
+      - install -Dm755 src/main.py ${FLATPAK_DEST}/bin/gifcap
+      - cp -r src ${FLATPAK_DEST}/lib/python3.11/site-packages/gifcap
+      - install -Dm644 resources/bsums.xyz.gifcap.desktop ${FLATPAK_DEST}/share/applications/bsums.xyz.gifcap.desktop
+      - install -Dm644 resources/icons/bsums.xyz.gifcap.png ${FLATPAK_DEST}/share/icons/hicolor/512x512/apps/bsums.xyz.gifcap.png
+    sources:
+      - type: dir
+        path: ..

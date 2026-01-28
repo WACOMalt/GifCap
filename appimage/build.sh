@@ -35,10 +35,10 @@ mkdir -p AppDir/usr/share/icons/hicolor/512x512/apps
 
 # Copy files
 cp dist/gifcap AppDir/usr/bin/
-cp ../resources/com.gifcap.GifCap.desktop AppDir/gifcap.desktop
-cp ../resources/com.gifcap.GifCap.desktop AppDir/usr/share/applications/
-cp ../resources/icons/com.gifcap.GifCap.png AppDir/gifcap.png
-cp ../resources/icons/com.gifcap.GifCap.png AppDir/usr/share/icons/hicolor/512x512/apps/
+cp ../resources/bsums.xyz.gifcap.desktop AppDir/gifcap.desktop
+cp ../resources/bsums.xyz.gifcap.desktop AppDir/usr/share/applications/
+cp ../resources/icons/bsums.xyz.gifcap.png AppDir/bsums.xyz.gifcap.png
+cp ../resources/icons/bsums.xyz.gifcap.png AppDir/usr/share/icons/hicolor/512x512/apps/
 
 # Create AppRun script
 cat > AppDir/AppRun << 'EOF'
@@ -53,7 +53,7 @@ chmod +x AppDir/AppRun
 
 # Build AppImage
 echo "Building AppImage..."
-ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir GifCap-x86_64.AppImage
+VERSION="1.0.0" ARCH=x86_64 ./appimagetool-x86_64.AppImage AppDir GifCap-1.0.0-x86_64.AppImage
 
-echo "✅ AppImage created: GifCap-x86_64.AppImage"
-ls -lh GifCap-x86_64.AppImage
+echo "✅ AppImage created: GifCap-1.0.0-x86_64.AppImage"
+ls -lh GifCap-1.0.0-x86_64.AppImage

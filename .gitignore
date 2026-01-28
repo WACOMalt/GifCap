@@ -27,8 +27,14 @@ share/python-wheels/
 PIPFILE.lock
 
 # PyInstaller
+# PyInstaller
 *.manifest
 *.spec
+!appimage/gifcap.spec
+
+# Internals
+.agent/
+.pybuild/
 
 # Installer logs
 pip-log.txt
@@ -73,3 +79,15 @@ gifcap_frames_*/
 *.gif
 config.ini
 .config/
+
+# Build artifacts and logs
+*.log
+*.tar.gz
+*.deb
+*.rpm
+repo/
+build-dir/
+.flatpak-builder/
+appimage/build_env/
+appimage/AppDir/
+appimage/*.AppImage
