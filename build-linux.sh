@@ -47,6 +47,10 @@ if [ "$BUILD_ALL" = true ]; then
     BUILD_RPM=true
 fi
 
+# Version configuration
+VERSION="1.0.0"
+ARCH="x86_64"
+
 # Create output directory
 mkdir -p dist
 
@@ -55,10 +59,10 @@ if [ "$BUILD_FLATPAK" = true ]; then
     echo -e "${YELLOW}Building Flatpak...${NC}"
     if command -v flatpak-builder &> /dev/null; then
         cd flatpak
-        flatpak-builder --force-clean --repo=repo build-dir bsums.xyz.gifcap.yml
-        flatpak build-bundle repo ../dist/GifCap.flatpak bsums.xyz.gifcap
+        flatpak-builder --force-clean --repo=repo --disable-cache build-dir bsums.xyz.gifcap.yml
+        flatpak build-bundle repo "../dist/GifCap-${VERSION}-${ARCH}.flatpak" bsums.xyz.gifcap
         cd ..
-        echo -e "${GREEN}✓ Flatpak built: dist/GifCap.flatpak${NC}"
+        echo -e "${GREEN}✓ Flatpak built: dist/GifCap-${VERSION}-${ARCH}.flatpak${NC}"
     else
         echo -e "${RED}✗ flatpak-builder not found. Install with: sudo apt install flatpak-builder${NC}"
     fi
@@ -70,8 +74,9 @@ if [ "$BUILD_APPIMAGE" = true ]; then
     echo -e "${YELLOW}Building AppImage...${NC}"
     cd appimage
     if ./build.sh; then
-        mv GifCap-x86_64.AppImage ../dist/
-        echo -e "${GREEN}✓ AppImage built: dist/GifCap-x86_64.AppImage${NC}"
+        # AppImage builder already generates versioned name, but let's enforce our naming
+        find . -name "GifCap-*.AppImage" -exec mv {} "../dist/GifCap-${VERSION}-${ARCH}.AppImage" \;
+        echo -e "${GREEN}✓ AppImage built: dist/GifCap-${VERSION}-${ARCH}.AppImage${NC}"
     else
         echo -e "${RED}✗ AppImage build failed${NC}"
     fi
@@ -84,8 +89,8 @@ if [ "$BUILD_DEB" = true ]; then
     echo -e "${YELLOW}Building DEB package...${NC}"
     if command -v dpkg-buildpackage &> /dev/null; then
         dpkg-buildpackage -us -uc -b
-        mv ../gifcap_*.deb dist/ 2>/dev/null || true
-        echo -e "${GREEN}✓ DEB package built: dist/gifcap_*.deb${NC}"
+        mv ../gifcap_*.deb "dist/GifCap-${VERSION}-${ARCH}.deb" 2>/dev/null || true
+        echo -e "${GREEN}✓ DEB package built: dist/GifCap-${VERSION}-${ARCH}.deb${NC}"
     else
         echo -e "${RED}✗ dpkg-buildpackage not found. Install with: sudo apt install dpkg-dev${NC}"
     fi
@@ -97,23 +102,23 @@ if [ "$BUILD_RPM" = true ]; then
     echo -e "${YELLOW}Building RPM package...${NC}"
     if command -v rpmbuild &> /dev/null; then
         # Create tarball
-        tar czf gifcap-1.0.0.tar.gz --transform 's,^,gifcap-1.0.0/,' src resources README.md LICENSE
+        tar czf "gifcap-${VERSION}.tar.gz" --transform "s,^,gifcap-${VERSION}/," src resources README.md LICENSE
         
         # Move to rpmbuild directory
         mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-        cp gifcap-1.0.0.tar.gz ~/rpmbuild/SOURCES/
+        cp "gifcap-${VERSION}.tar.gz" ~/rpmbuild/SOURCES/
         cp rpm/gifcap.spec ~/rpmbuild/SPECS/
         
         # Build
         rpmbuild -ba ~/rpmbuild/SPECS/gifcap.spec
         
         # Copy result
-        cp ~/rpmbuild/RPMS/noarch/gifcap-*.rpm dist/
+        cp ~/rpmbuild/RPMS/noarch/gifcap-*.rpm "dist/GifCap-${VERSION}-${ARCH}.rpm"
         
         # Cleanup
-        rm gifcap-1.0.0.tar.gz
+        rm "gifcap-${VERSION}.tar.gz"
         
-        echo -e "${GREEN}✓ RPM package built: dist/gifcap-*.rpm${NC}"
+        echo -e "${GREEN}✓ RPM package built: dist/GifCap-${VERSION}-${ARCH}.rpm${NC}"
     else
         echo -e "${RED}✗ rpmbuild not found. Install with: sudo dnf install rpm-build${NC}"
     fi
