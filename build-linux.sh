@@ -55,8 +55,8 @@ if [ "$BUILD_FLATPAK" = true ]; then
     echo -e "${YELLOW}Building Flatpak...${NC}"
     if command -v flatpak-builder &> /dev/null; then
         cd flatpak
-        flatpak-builder --force-clean --repo=repo build-dir com.gifcap.GifCap.yml
-        flatpak build-bundle repo ../dist/GifCap.flatpak com.gifcap.GifCap
+        flatpak-builder --force-clean --repo=repo build-dir bsums.xyz.gifcap.yml
+        flatpak build-bundle repo ../dist/GifCap.flatpak bsums.xyz.gifcap
         cd ..
         echo -e "${GREEN}✓ Flatpak built: dist/GifCap.flatpak${NC}"
     else
