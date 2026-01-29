@@ -59,6 +59,12 @@ if [ "$BUILD_FLATPAK" = true ]; then
     echo -e "${YELLOW}Building Flatpak...${NC}"
     if command -v flatpak-builder &> /dev/null; then
         cd flatpak
+        # Fix: Configure OSTree to ignore low disk space (default is 3% which fails on large drives with <10GB free)
+        if [ ! -d "repo" ]; then
+            ostree init --mode=archive-z2 --repo=repo
+        fi
+        ostree config --repo=repo set core.min-free-space-percent 0
+
         flatpak-builder --force-clean --repo=repo --disable-cache build-dir bsums.xyz.gifcap.yml
         flatpak build-bundle repo "../dist/GifCap-${VERSION}-${ARCH}.flatpak" bsums.xyz.gifcap
         cd ..

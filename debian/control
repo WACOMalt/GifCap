@@ -1,7 +1,7 @@
 Source: gifcap
 Section: graphics
 Priority: optional
-Maintainer: GifCap Developers <dev@gifcap.com>
+Maintainer: BSums.xyz <ben@bsums.xyz>
 Build-Depends: debhelper (>= 11), python3-all (>= 3.10), dh-python
 Standards-Version: 4.6.0
 Homepage: https://github.com/yourusername/gifcap

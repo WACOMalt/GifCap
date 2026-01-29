@@ -91,3 +91,8 @@ build-dir/
 appimage/build_env/
 appimage/AppDir/
 appimage/*.AppImage
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/files
+debian/gifcap.substvars
+debian/gifcap/
