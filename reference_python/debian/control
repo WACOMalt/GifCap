@@ -1,0 +1,26 @@
+Source: gifcap
+Section: graphics
+Priority: optional
+Maintainer: BSums.xyz <ben@bsums.xyz>
+Build-Depends: debhelper (>= 11), python3-all (>= 3.10), dh-python
+Standards-Version: 4.6.0
+Homepage: https://github.com/yourusername/gifcap
+
+Package: gifcap
+Architecture: all
+Depends: ${python3:Depends}, ${misc:Depends},
+         python3-pyqt6,
+         python3-pil,
+         python3-pil,
+         python3-imageio
+Recommends: grim
+Description: Screen recorder for creating animated GIFs
+ GifCap is a Linux port of GifCam featuring a transparent capture
+ window, in-app frame editing, and efficient GIF encoding.
+ .
+ Features:
+  - Transparent recording window with click-through support
+  - Smart frame comparison to reduce file size
+  - Built-in frame editor with right-click operations
+  - Hybrid X11 and Wayland support
+  - Cursor capture with compositing

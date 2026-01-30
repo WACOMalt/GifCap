@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=GifCap
+Comment=Animated GIF Screen Recorder
+Exec=gifcap
+Icon=bsums.xyz.gifcap
+Type=Application
+Categories=Utility;Recorder;
+Terminal=false
+StartupNotify=true

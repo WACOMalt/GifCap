@@ -1,0 +1,29 @@
+[package]
+name = "gifcap"
+version = "1.0.0"
+edition = "2021"
+authors = ["BSums.xyz <ben@bsums.xyz>"]
+description = "A simple, open-source screen recorder for creating animated GIFs."
+
+[dependencies]
+# GUI
+iced = { version = "0.12", features = ["image", "svg", "canvas", "tokio"] }
+
+# System
+tokio = { version = "1.36", features = ["full"] }
+rfd = "0.14" # File dialogs
+raw-window-handle = "0.6" # For window ID access (needed for capture exclusion if possible)
+
+# Capture & Image Processing
+# xcap = "0.0.9" # Cross-platform capture (Native X11 support)
+scap = { package = "zed-scap", git = "https://github.com/zed-industries/scap", branch = "zed-patches", features = ["x11"] }
+image = "0.25" # Image manipulation
+gif = "0.13" # GIF encoding
+
+# Utilities
+device_query = "2.1" # For cursor capture
+chrono = "0.4" # Timestamps
+anyhow = "1.0" # Error handling
+log = "0.4"
+env_logger = "0.11"
+

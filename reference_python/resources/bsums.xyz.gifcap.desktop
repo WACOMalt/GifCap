@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=GifCap
+Comment=Screen recorder for creating animated GIFs
+Exec=gifcap
+Icon=bsums.xyz.gifcap
+Terminal=false
+Categories=AudioVideo;Video;Recorder;
+Keywords=gif;screen;record;capture;animation;
+StartupNotify=true
+StartupWMClass=gifcap

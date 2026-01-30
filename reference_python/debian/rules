@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	# Nothing to build - pure Python
+
+override_dh_auto_install:
+	# Install Python module
+	mkdir -p debian/gifcap/usr/share/gifcap
+	cp -r src/* debian/gifcap/usr/share/gifcap/
+	
+	# Install executable wrapper
+	mkdir -p debian/gifcap/usr/bin
+	echo '#!/bin/bash' > debian/gifcap/usr/bin/gifcap
+	echo 'exec python3 /usr/share/gifcap/main.py "$$@"' >> debian/gifcap/usr/bin/gifcap
+	chmod +x debian/gifcap/usr/bin/gifcap
+	
+	# Install desktop file
+	mkdir -p debian/gifcap/usr/share/applications
+	cp resources/bsums.xyz.gifcap.desktop debian/gifcap/usr/share/applications/
+	
+	# Install icon
+	mkdir -p debian/gifcap/usr/share/icons/hicolor/512x512/apps
+	cp resources/icons/bsums.xyz.gifcap.png debian/gifcap/usr/share/icons/hicolor/512x512/apps/
+
+override_dh_auto_test:
+	# Skip tests for now
+	true
