@@ -4,7 +4,7 @@ A simple, open-source screen recorder for Linux built with Rust. Captures select
 
 ## IMPORTANT VIBE-CODING/AI/LLM NOTE
 This app is vibe-coded with Claude Opus and Gemini. As such, I offer no assurances to code quality, safety, etc. By using this app, you accept that it may suck. The code is here if you want to look through it.
-I plan to continue directing the maintenance of this app, but no promises.  Feel free to fork it to make it better or just as reference. I have asked the coding agents to ensure only FOSS code was use
+I plan to continue directing the maintenance of this app, but no promises.  Feel free to fork it to make it better or just as reference.
 
 ## Usage
 
