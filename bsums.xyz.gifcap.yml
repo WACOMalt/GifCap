@@ -1,0 +1,17 @@
+app-id: bsums.xyz.gifcap
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: gifcap
+modules:
+  - name: gifcap
+    buildsystem: simple
+    build-commands:
+      - install -D gifcap /app/bin/gifcap
+      - install -D resources/bsums.xyz.gifcap.desktop /app/share/applications/bsums.xyz.gifcap.desktop
+      - install -D resources/icons/bsums.xyz.gifcap.png /app/share/icons/hicolor/512x512/apps/bsums.xyz.gifcap.png
+      - mkdir -p /app/share/gifcap/resources
+      - cp -r resources/fonts /app/share/gifcap/resources/
+    sources:
+      - type: dir
+        path: .

@@ -1,1 +1,16 @@
 /target
+/dist
+/rpmbuild
+/deb_package
+/AppDir
+/build-dir
+.flatpak-builder/
+*.AppImage
+*.deb
+*.rpm
+*.flatpak
+*.zip
+*.exe
+gifcap
+*.log
+.gemini/

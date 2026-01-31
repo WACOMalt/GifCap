@@ -32,6 +32,7 @@ impl RecordingSession {
         self.frames.len()
     }
     
+    #[allow(dead_code)]
     pub fn clear(&mut self) {
         self.frames.clear();
         self.start_time = Instant::now();

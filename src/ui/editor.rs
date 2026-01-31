@@ -95,7 +95,7 @@ impl Editor {
                         .style(move |_theme: &iced::Theme| container::Appearance {
                             border: iced::Border {
                                 width: if is_selected { 3.0 } else { 1.0 },
-                                color: if is_selected { Color::from_rgb(0.0, 0.8, 0.0) } else { Color::BLACK },
+                                color: if is_selected { Color::from_rgb(0.0, 0.8, 0.0) } else { Color::WHITE },
                                 radius: 0.0.into(),
                             },
                             ..Default::default()

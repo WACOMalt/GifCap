@@ -63,7 +63,7 @@ impl Recorder {
         // Control Panel (Right side buttons)
         let rec_btn_text = if self.is_recording { "Stop" } else { "Rec" };
         let rec_msg = if self.is_recording { Message::StopPressed } else { Message::RecordPressed };
-        let rec_style = if self.is_recording { iced::theme::Button::Destructive } else { iced::theme::Button::Primary };
+        let rec_style = if self.is_recording { iced::theme::Button::Destructive } else { iced::theme::Button::Secondary };
 
         let make_text = |content: &str| {
             text(content)
@@ -73,14 +73,13 @@ impl Recorder {
         };
 
         // Handle Edit button state
-        let mut edit_btn = button(make_text("Edit")).width(Length::Fill);
+        // Default Edit button to Secondary
+        let mut edit_btn = button(make_text("Edit"))
+            .width(Length::Fill)
+            .style(iced::theme::Button::Secondary); 
+            
         if !self.is_recording {
-             // Only attach message if not recording
              edit_btn = edit_btn.on_press(Message::EditPressed);
-        } else {
-             // We can style it as disabled if we want, or rely on Theme's disabled generic
-             // But for now, just removing the action makes it chemically inert.
-             edit_btn = edit_btn.style(iced::theme::Button::Secondary); // Optional visual cue
         }
         
         // FPS Input
@@ -94,9 +93,15 @@ impl Recorder {
             button(make_text(rec_btn_text)).on_press(rec_msg).style(rec_style).width(Length::Fill),
             text("FPS").size(12),
             fps_input,
-            button(make_text("Frame")).on_press(Message::FramePressed).width(Length::Fill),
+            button(make_text("Frame"))
+                .on_press(Message::FramePressed)
+                .style(iced::theme::Button::Secondary)
+                .width(Length::Fill),
             edit_btn,
-            button(make_text("Save")).on_press(Message::SavePressed).width(Length::Fill),
+            button(make_text("Save"))
+                .on_press(Message::SavePressed)
+                .style(iced::theme::Button::Secondary)
+                .width(Length::Fill),
         ]
         .spacing(5)
         .padding(5)
@@ -120,7 +125,11 @@ impl Recorder {
             // Right side controls
             container(controls)
                 .height(Length::Fill)
-                .style(container::Appearance::default().with_background(Color::WHITE))
+                .style(|_theme: &Theme| container::Appearance {
+                    background: Some(Color::from_rgb8(45, 45, 45).into()),
+                    text_color: Some(Color::WHITE),
+                    ..Default::default()
+                })
         ]
         .into()
     }

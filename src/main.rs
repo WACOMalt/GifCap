@@ -7,7 +7,7 @@ use iced::widget::container; // Kept container locally used? No, view maps direc
 // main() uses Settings
 // So clean up:
 use iced::{executor, time, window, Application, Command, Element, Event, Settings, Subscription, Theme};
-use std::time::{Instant, Duration};
+use std::time::Duration;
 use std::sync::{Arc, Mutex}; // Added for thread safety
 use ui::recorder::{self, Recorder};
 use capture::CaptureManager;
@@ -46,7 +46,7 @@ struct GifCap {
 enum Message {
     Recorder(recorder::Message),
     Editor(ui::editor::Message),
-    Tick(Instant),
+    Tick(()),
     Event(Event),
     FrameCaptured(Result<Option<RgbaImage>, String>),
     FileSaved(Result<(), String>),
@@ -200,13 +200,10 @@ impl Application for GifCap {
                                         }
                                     };
                                     
-                                    let start = std::time::Instant::now();
-                                    let res = manager.capture_area(capture_x, capture_y, capture_w, capture_h);
-                                    let duration = start.elapsed();
-                                    if duration.as_millis() > 20 {
-                                         println!("Slow capture: {:?}", duration);
-                                    }
 
+
+
+                                    let res = manager.capture_area(capture_x, capture_y, capture_w, capture_h);
                                     res.map(Some)
                                         .map_err(|e| e.to_string())
                                 } else {
@@ -226,7 +223,7 @@ impl Application for GifCap {
                         if self.recorder.is_recording() && self.editor.is_none() {
                             if let Some(session) = &mut self.session {
                                 session.add_frame(image);
-                                println!("Captured frame: {} | Total: {}", session.frame_count(), session.frame_count());
+
                             }
                         }
                     }
@@ -251,7 +248,8 @@ impl Application for GifCap {
                 .width(iced::Length::Fill)
                 .height(iced::Length::Fill)
                 .style(|_theme: &Theme| container::Appearance {
-                    background: Some(iced::Color::WHITE.into()), // Opaque background for editor
+                    background: Some(iced::Color::from_rgb8(30, 30, 30).into()), // Opaque dark background for editor
+                    text_color: Some(iced::Color::WHITE),
                     ..Default::default()
                 })
                 .into();
@@ -268,10 +266,15 @@ impl Application for GifCap {
             .into()
     }
 
+    fn theme(&self) -> Theme {
+        Theme::Dark
+    }
+
     fn style(&self) -> iced::theme::Application {
+        // Keep transparent background for the window hole
         iced::theme::Application::Custom(Box::new(|_theme: &Theme| iced::application::Appearance {
             background_color: iced::Color::TRANSPARENT,
-            text_color: iced::Color::BLACK,
+            text_color: iced::Color::WHITE,
         }))
     }
 
@@ -281,7 +284,7 @@ impl Application for GifCap {
             // Avoid division by zero, though picker ensures >= 10
             let fps = if fps == 0 { 15 } else { fps };
             
-            time::every(Duration::from_millis(1000 / fps)).map(Message::Tick)
+            time::every(Duration::from_millis(1000 / fps)).map(|_| Message::Tick(()))
         } else {
             Subscription::none()
         };
