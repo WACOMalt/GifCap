@@ -1,7 +1,8 @@
 !include "MUI2.nsh"
 
+!define PRODUCT_VERSION "1.1.1"
 Name "GifCap"
-OutFile "GifCap_Installer.exe"
+OutFile "GifCap_${PRODUCT_VERSION}_Windows_x64_Installer.exe"
 InstallDir "$PROGRAMFILES64\GifCap"
 InstallDirRegKey HKCU "Software\bsums.xyz.gifcap" ""
 RequestExecutionLevel admin

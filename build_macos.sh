@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-VERSION="1.1.0"
+VERSION="1.1.1"
 APP_NAME="GifCap"
 BUNDLE_NAME="${APP_NAME}.app"
 DIST_DIR="$(pwd)/dist"

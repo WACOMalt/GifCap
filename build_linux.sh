@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-VERSION="1.1.0"
+VERSION="1.1.1"
 DIST_DIR="$(pwd)/dist"
 mkdir -p "$DIST_DIR"
 

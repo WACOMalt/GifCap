@@ -1,5 +1,5 @@
 @echo off
-set VERSION=1.1.0
+set VERSION=1.1.1
 set DIST_DIR=dist
 
 mkdir %DIST_DIR%
